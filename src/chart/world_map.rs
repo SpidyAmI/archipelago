@@ -1,12 +1,12 @@
-use geometry::{Cell, MapError, Terrain};
+use geometry::{Cell, Map, MapError, Terrain};
 
-pub struct GenerationGrid {
+pub struct WorldMap {
     cells: Vec<(Cell, Terrain)>, // A list of all the cells in the grid
     radius: u32,                 // The radius of the grid
     starts: Vec<usize>,          // Array with all the column starts
 }
 
-impl GenerationGrid {
+impl WorldMap {
     pub fn new(radius: u32) -> Result<Self, MapError> {
         if radius > (i32::MAX / 2) as u32 {
             // prevents overflow in start(), where operations like R - q can reach 2 * R
@@ -22,8 +22,8 @@ impl GenerationGrid {
             .and_then(|n| n.checked_add(1))
             .ok_or(MapError::ErrRadius)? as usize;
 
-        let mut starts: Vec<usize> = Vec::with_capacity((2 * radius + 1) as usize);
-        let mut cells: Vec<(Cell, Terrain)> = Vec::with_capacity(cells_len);
+        let mut starts: Vec<usize> = Vec::with_capacity((2 * radius + 1) as usize); // There are 2R+1 columns
+        let mut cells: Vec<(Cell, Terrain)> = Vec::with_capacity(cells_len); // There are (R+1)3R+1 cells in total
 
         // Calculate starts and fill the grid
         for q in (-rad)..=rad {
@@ -38,6 +38,12 @@ impl GenerationGrid {
             }
         }
 
+        // Check for duplicates
+        if cells.windows(2).any(|w| w[0] == w[1]) {
+            return Err(MapError::ErrCellDup);
+        }
+
+        // Check for
         Ok(Self { radius, cells, starts })
     }
 
@@ -79,13 +85,6 @@ impl GenerationGrid {
         self.cells.get(index).map(|(cell, _)| *cell)
     }
 
-    /// Returns the terrain of the given cell.
-    /// Returns None if out of bounds
-    pub fn get(&self, cell: Cell) -> Option<Terrain> {
-        // We safely extract the terrain
-        self.to_index(cell).map(|index| self.cells[index].1)
-    }
-
     /// Sets the terrain of the given cell to the given terrain
     /// Returns a boolean that describes success
     pub fn set(&mut self, cell: Cell, terrain: Terrain) -> bool {
@@ -109,5 +108,29 @@ impl GenerationGrid {
     /// Returns an iterator over all the cells
     pub fn iter(&self) -> impl Iterator<Item = &(Cell, Terrain)> {
         self.cells.iter()
+    }
+}
+
+impl Map for WorldMap {
+    fn radius(&self) -> u32 {
+        self.radius
+    }
+
+    /// Returns the terrain of the given cell.
+    /// Returns None if out of bounds
+    fn terrain(&self, cell: Cell) -> Option<Terrain> {
+        // We safely extract the terrain
+        self.to_index(cell).map(|index| self.cells[index].1)
+    }
+
+    fn water_cells(&self) -> impl Iterator<Item = Cell> + '_ {
+        self.cells.iter().filter(|(_, t)| t.is_water()).map(|&(c, _)| c)
+    }
+
+    fn clear_cells(&self) -> impl Iterator<Item = Cell> + '_ {
+        self.cells
+            .iter()
+            .filter(|(_, t)| matches!(t, Terrain::Clear))
+            .map(|&(c, _)| c)
     }
 }

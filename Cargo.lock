@@ -5,7 +5,10 @@ version = 4
 [[package]]
 name = "ap-2026-common-code-clues"
 version = "0.1.0"
-source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=main#820670552fe33e8ab39d7ef1df88331e007ddea1"
+source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=clues-feat-implementation#ced611ecd3b01956702f31406d33a155e134fab6"
+dependencies = [
+ "ap-2026-common-code-geometry 0.1.0 (git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=clues-feat-implementation)",
+]
 
 [[package]]
 name = "ap-2026-common-code-conformance"
@@ -15,9 +18,18 @@ source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.gi
 [[package]]
 name = "ap-2026-common-code-geometry"
 version = "0.1.0"
-source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=geometry-feat-first-impl#e7cfaf54797f546893fe84e72c232df3428f999d"
+source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=clues-feat-implementation#ced611ecd3b01956702f31406d33a155e134fab6"
 dependencies = [
- "ap-2026-common-code-shared",
+ "ap-2026-common-code-shared 0.1.0 (git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=clues-feat-implementation)",
+ "thiserror",
+]
+
+[[package]]
+name = "ap-2026-common-code-geometry"
+version = "0.1.0"
+source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=main#b10d88532496f5a1e0f1138a0dab1a46c189f360"
+dependencies = [
+ "ap-2026-common-code-shared 0.1.0 (git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=main)",
  "thiserror",
 ]
 
@@ -29,7 +41,12 @@ source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.gi
 [[package]]
 name = "ap-2026-common-code-shared"
 version = "0.1.0"
-source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=geometry-feat-first-impl#e7cfaf54797f546893fe84e72c232df3428f999d"
+source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=clues-feat-implementation#ced611ecd3b01956702f31406d33a155e134fab6"
+
+[[package]]
+name = "ap-2026-common-code-shared"
+version = "0.1.0"
+source = "git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=main#b10d88532496f5a1e0f1138a0dab1a46c189f360"
 
 [[package]]
 name = "ap-2026-common-code-wind"
@@ -42,9 +59,9 @@ version = "0.1.0"
 dependencies = [
  "ap-2026-common-code-clues",
  "ap-2026-common-code-conformance",
- "ap-2026-common-code-geometry",
+ "ap-2026-common-code-geometry 0.1.0 (git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=main)",
  "ap-2026-common-code-messages",
- "ap-2026-common-code-shared",
+ "ap-2026-common-code-shared 0.1.0 (git+https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git?branch=main)",
  "ap-2026-common-code-wind",
 ]
 

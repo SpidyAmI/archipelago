@@ -1,6 +1,6 @@
-mod generation_grid;
+mod world_map;
 
-use crate::chart::generation_grid::GenerationGrid;
+use crate::chart::world_map::WorldMap;
 use geometry::{Cell, Map};
 use shared::{Params, Seed, ShipId};
 
@@ -14,8 +14,8 @@ struct ShipView {}
 struct SpectatorView {}
 struct Outcome {}
 
-struct Chart {
-    map: Map,
+struct Chart<M: Map = WorldMap> {
+    map: M,
     ship_position: [Option<Cell>; 6],
     log: Vec<Event>,
 }
@@ -28,16 +28,20 @@ impl Chart {
         let rock_count = params.rock_count;
         let round_cap = params.round_cap;
 
-        let grid = GenerationGrid::new(radius);
+        let grid = WorldMap::new(radius);
 
         let grid = match grid {
             Ok(x) => x,
             _ => todo!(), // TODO: parse the MapError into a GenError
         };
 
-        // We finished defining the grid, so we make this into an immutable map
-        let map = Map::try_new(radius, grid.cells());
-        todo!(); // TODO: finish the generation function
+        let ship_position = grid.corners().map(|x| Some(x));
+
+        let chart = Chart {
+            map: grid,
+            ship_position,
+            log: todo!(), // Add the log
+        };
     }
 
     pub fn validate(&self, ship: ShipId, action: &Action) -> Result<ValidatedAction, Rejection> {
