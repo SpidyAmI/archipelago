@@ -4,9 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-geometry = { package = "ap-2026-common-code-geometry", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "geometry-feat-first-impl" }
-shared = { package = "ap-2026-common-code-shared", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "geometry-feat-first-impl" }
+geometry = { package = "ap-2026-common-code-geometry", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
+shared = { package = "ap-2026-common-code-shared", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
+island = { package = "ap-2026-common-code-islandtrait", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
 wind = { package = "ap-2026-common-code-wind", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
-clues = { package = "ap-2026-common-code-clues", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
+clues = { package = "ap-2026-common-code-clues", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "clues-feat-implementation" }
 conformance = { package = "ap-2026-common-code-conformance", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
 messages = { package = "ap-2026-common-code-messages", git = "https://github.com/SharedCode-UniTn-AP-2026/Common_Code-AP_2026.git", branch = "main" }
